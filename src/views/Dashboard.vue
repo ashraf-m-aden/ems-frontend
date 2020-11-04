@@ -4,7 +4,7 @@
       <v-img class="img" src="../assets/ems.jpg"></v-img>
       <h2>EMS</h2>
     </div>
-    <div class="card">
+    <div class="card" @click="goExpress">
       <v-img class="img" max-width="250" src="../assets/de.png"></v-img>
       <h2>Colis express</h2>
     </div>
@@ -22,6 +22,9 @@ export default {
   methods: {
     goEMS () {
       this.$router.push('/colis-ems')
+    },
+    goExpress () {
+      this.$router.push('/express')
     }
   }
 }

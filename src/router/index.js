@@ -4,6 +4,7 @@ import Dashboard from '../views/Dashboard.vue'
 import COLIS from '../views/colis/Colis.vue'
 import ALLCOLIS from '../views/all/Colis.vue'
 import REVIEW from '../views/colis/Review.vue'
+import EXPRESS from '../views/express/Express.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/review',
     name: 'Review',
     component: REVIEW
+  },
+  {
+    path: '/express',
+    name: 'Express',
+    component: EXPRESS
   }
 ]
 
