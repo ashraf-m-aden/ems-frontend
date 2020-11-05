@@ -1,5 +1,6 @@
 <template>
-  <div class="control">
+  <div class="control mb-5">
+    <span class="code">CP71</span>
     <div class="control-header border-danger">
       <div class="logo">
         <img src="../../assets/logo.png" class="logo_img" alt="" />
@@ -15,9 +16,9 @@
           <span for="tel">TEL:</span>
           <input :value="from.tel" readonly type="text"  /><br />
           <span for="code">Code Postale:</span>
-          <input readonly :value="from.cp" type="text"  />
+          <input readonly class="codeville" :value="from.cp" type="text"  />
           <span for="ville">Ville:</span>
-          <input readonly type="text" :value="from.town"  /><br />
+          <input readonly type="text" class="codeville" :value="from.town"  /><br />
           <strong>Djibouti</strong>
           <div class="douane">
             Reference douane de l'expediteur (si elle existe)
@@ -176,6 +177,13 @@ export default {
 @import "../../sass/main.scss";
 
 .control {
+  padding-top: 1rem;
+  position: relative;
+  .code{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   &-header {
     position: relative;
     display: flex;
@@ -268,7 +276,7 @@ export default {
         &-details {
           width: 80%;
           border-bottom: solid 1px $color-dark-grey;
-          height: 150px;
+          height: 110px!important;
           position: relative;
 
           .box {

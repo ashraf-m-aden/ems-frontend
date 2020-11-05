@@ -1,5 +1,6 @@
 <template>
   <div class="control">
+        <span class="code">CP71</span>
     <v-alert
       :value="notif"
       color="#1A237E"
@@ -330,6 +331,13 @@ export default {
 @import "../../sass/main.scss";
 
 .control {
+    position: relative;
+    padding-top: 1rem;
+  .code{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   &-header {
     position: relative;
     display: flex;
