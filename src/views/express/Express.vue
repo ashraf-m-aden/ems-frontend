@@ -23,6 +23,9 @@
           <input type="text" />
         </div>
       </div>
+      <div class="express-body-body">
+          <div class="sender"></div>
+      </div>
     </div>
   </div>
 </template>
