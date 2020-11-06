@@ -289,7 +289,8 @@ export default {
       this.$store.dispatch('setFrom', this.from)
     },
     getPrice () {
-      const weight = this.to.weight
+      var weight = this.to.weight.toString()
+      weight = Math.ceil((parseFloat(this.to.weight)))
       const country = this.to.country
       if (
         this.to.country !== '' &&
@@ -315,7 +316,21 @@ export default {
       })
     },
     syncDate () {
-      this.to.date = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
+      if (new Date().getDate() < 10) {
+        this.to.date =
+        new Date().getFullYear() +
+        '-' +
+        (new Date().getMonth() + 1) +
+        '-0' +
+        new Date().getDate()
+      } else {
+        this.to.date =
+        new Date().getFullYear() +
+        '-' +
+        (new Date().getMonth() + 1) +
+        '-' +
+        new Date().getDate()
+      }
       this.syncData()
     }
   },

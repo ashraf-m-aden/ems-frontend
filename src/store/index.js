@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import to from './to'
-import fromm from './from'
+import ems from './ems'
+import express from './express'
 import print from './print'
 Vue.use(Vuex)
 
@@ -13,6 +13,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    to, fromm, print
+    ems, express, print
   }
 })

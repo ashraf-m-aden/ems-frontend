@@ -13,11 +13,20 @@ export const state = () => ({
     date: '',
     price: ''
   },
-  countries: []
+  countries: [],
+  from: {
+    name: '',
+    tel: '',
+    cp: '',
+    town: ''
+  }
 })
 export const getters = {
   getTo (state) {
     return state.to
+  },
+  getFrom (state) {
+    return state.from
   },
   getCountry (state) {
     return state.countries
@@ -29,6 +38,9 @@ export const mutations = {
   },
   SET_COUNTRY (state, countries) {
     state.countries = countries
+  },
+  SET_FROM (state, from) {
+    state.from = from
   }
 }
 export const actions = {
@@ -41,6 +53,9 @@ export const actions = {
     }).catch((error) => {
       console.log('erreur de recuperation des pays. ' + error)
     })
+  },
+  setFrom ({ commit }, from) {
+    commit('SET_FROM', from)
   }
 }
 

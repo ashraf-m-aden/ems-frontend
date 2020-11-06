@@ -1,5 +1,16 @@
 <template>
 <div class="wrapper">
+  <v-alert
+      :value="notif"
+      color="#1A237E"
+      dark
+      dismissible
+      border="top"
+      transition="scale-transition"
+      width="200px"
+    >
+      Colis enregistré</v-alert
+    >
   <span class="code">E1</span>
         <div class="dropdown dropleft">
         <img
@@ -12,7 +23,7 @@
           aria-expanded="false"
         />
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <span class="dropdown-item btn" @click="saveEms">Enregistrer</span>
+          <span class="dropdown-item btn" @click="saveExpress">Enregistrer</span>
         </div>
       </div>
     <div class="express">
@@ -23,14 +34,14 @@
             <label class="block">Bureau d'origine</label>
             <label class="block form-controll">La poste de DJibouti. Service EMS</label>
           </div>
-          <div class="left-bottom">
+          <div class="left-bottom" @click="syncDate">
             <div class="border-right border-dark p-1">
               <label class="block">Date de depot</label>
-              <input class="form-control" type="text" />
+              <input class="form-control" type="text" readonly :value="from.date" />
             </div>
             <div class="p-1">
               <label class="block">Heure</label>
-              <input class="form-control" type="text" />
+              <input class="form-control" type="text" readonly :value="from.hour" />
             </div>
           </div>
         </div>
@@ -72,13 +83,19 @@
                 Document <br>
                      <v-icon v-if="from.isDoc"
       large
-      color="#F4511E"
+      color="#263238"
     >
       mdi-check
     </v-icon>
               </td>
-              <td>
-                Marchandise
+              <td @click="from.isMarchandise = !from.isMarchandise">
+                Marchandise<br>
+                     <v-icon v-if="from.isMarchandise"
+      large
+      color="#263238"
+    >
+      mdi-check
+    </v-icon>
               </td>
               <td colspan="2">
                 Pour les marchandises priere de fournir la facture commerciale
@@ -100,10 +117,10 @@
               </td>
             </tr>
             <tr>
-              <td><textarea :value="from.object" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
-              <td><textarea :value="from.number" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
-              <td><input :value="from.weight" type="number" class="form-control triple"></td>
-              <td><textarea :value="from.value" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
+              <td><textarea v-model="from.object" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
+              <td><textarea v-model="from.number" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
+              <td><input v-model="from.weight" type="number" class="form-control triple"></td>
+              <td><textarea v-model="from.value" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
             </tr>
             <tr>
               <td colspan="4">
@@ -129,28 +146,29 @@
           <div class="receiver-contact">
             <div class="border-right border-bottom border-dark p-1">
               <label class="block">Numero de contrat</label>
-              <input class="form-control" type="text" />
+              <input v-model="to.contract" class="form-control" type="text" />
             </div>
             <div class=" border-bottom border-dark p-1">
               <label class="block">Numero de telephone</label>
-              <input class="form-control" type="text" />
+              <input v-model="to.tel" class="form-control" type="text" />
             </div>
           </div>
           <div class="receiver-info p-1">
             <label class="block">Nom et addresse de l'expediteur</label>
-            <input type="text" class="form-control" />
+            <input v-model="to.name" type="text" class="form-control" />
             <label> Addresse</label>
-            <input type="text" class="form-control" />
-            <label> Ville</label> <input type="text" class="form-control" />
+            <input v-model="to.address" type="text" class="form-control" />
+            <label> Ville</label> <input v-model="to.town" type="text" class="form-control" />
             <label> Code Postal</label>
-            <input type="text" class="form-control" />
+            <input v-model="to.cp" type="text" class="form-control" />
             <label>Pays/Zone</label>
             <div class="zone">
               <select name="" id="" class="form-control" v-model="to.country">
                 <option v-for="(country,index) in countries" :key="index" :value="country.name">{{country.name}}</option>
               </select>
-              <select name="" id="" class="form-control"></select>
-            </div>
+              <select name="" id="" class="form-control" v-model="to.zone" @change="getPrice">
+                <option v-for="(zone,index) in zones" :key="index" :value="zone.name">{{zone.name}}</option>
+              </select>            </div>
           </div>
           <table class="receiver-table">
             <tr>
@@ -167,7 +185,9 @@
                 Signature
               </td>
             </tr>
-            <tr>
+          </table>
+          <table class="receiver-table-second">
+                        <tr>
               <td colspan="2">Directives speciales</td>
               <td>Date de la remise</td>
               <td>Heure de la remise</td>
@@ -181,7 +201,7 @@
 </template>
 <script>
 import price from '../../services/price'
-import ems from '../../services/ems'
+import express from '../../services/express'
 export default {
   data () {
     return {
@@ -200,7 +220,9 @@ export default {
         number: '',
         weight: '',
         value: '',
-        etiquette: ''
+        etiquette: '',
+        date: '',
+        hour: ''
       },
       to: {
         name: '',
@@ -209,44 +231,46 @@ export default {
         cp: '',
         town: '',
         country: '',
-        price: ''
+        zone: '',
+        price: '',
+        contract: ''
       },
       message: '',
       notif: false
     }
   },
   mounted () {
-    this.$store.dispatch('setCountry')
+    this.$store.dispatch('setExpressCountry')
+    this.$store.dispatch('setExpressZone')
     this.$store.dispatch('setprint', true)
   },
   destroyed () {
     this.$store.dispatch('setprint', false)
   },
   methods: {
-    syncData () {
-      this.$store.dispatch('setTo', this.to)
-      this.$store.dispatch('setFrom', this.from)
-    },
+
     getPrice () {
-      const weight = this.to.weight
-      const country = this.to.country
+      const zone = this.to.zone
+      var weight = this.from.weight.toString()
+      weight = Math.ceil((parseFloat(this.from.weight)))
+
       if (
-        this.to.country !== '' &&
-        this.to.weight !== null &&
-        this.to.weight !== undefined &&
-        this.to.weight !== 0
+        this.to.zone !== '' &&
+        this.from.weight !== null &&
+        this.from.weight !== undefined &&
+        this.from.weight !== 0
       ) {
-        price.getPrice({ weight, country }).then(price => {
+        console.log(weight)
+        price.getExpressPrice({ weight, zone }).then(price => {
           this.to.price = price.data
-          this.syncData()
           this.message = ''
         })
       } else {
-        this.message = "Pas assez d'infosrmations pour afficher un prix"
+        this.message = "Pas assez d'informations pour afficher un prix"
       }
     },
-    saveEms () {
-      ems.postEms({ to: this.to, from: this.from }).then(() => {
+    saveExpress () {
+      express.postexpress({ to: this.to, from: this.from }).then(() => {
         this.notif = true
         setTimeout(() => {
           this.notif = false
@@ -254,18 +278,30 @@ export default {
       })
     },
     syncDate () {
-      this.to.date =
+      if (new Date().getDate() < 10) {
+        this.from.date =
+        new Date().getFullYear() +
+        '-' +
+        (new Date().getMonth() + 1) +
+        '-0' +
+        new Date().getDate()
+      } else {
+        this.from.date =
         new Date().getFullYear() +
         '-' +
         (new Date().getMonth() + 1) +
         '-' +
         new Date().getDate()
-      this.syncData()
+      }
+      this.from.hour = new Date().getHours() + ':' + new Date().getMinutes()
     }
   },
   computed: {
     countries () {
-      return this.$store.getters.getCountry
+      return this.$store.getters.getExpressCountry
+    },
+    zones () {
+      return this.$store.getters.getExpressZone
     }
   }
 }
@@ -348,6 +384,7 @@ padding: 0rem 0rem 1rem 1rem;
       &-receiver {
         width: 50%;
         border: 1px solid black;
+        position: relative;
         .receiver-contact {
           display: flex;
           div {
@@ -358,7 +395,17 @@ padding: 0rem 0rem 1rem 1rem;
           width: 100%;
           border-top: 1px solid black;
           td{
-            height: 11rem;
+padding: 0rem 0rem 5rem 1rem !important;
+          }
+        }
+                .receiver-table-second{
+          width: 100%;
+          border-top: 1px solid black;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          td{
 padding: 0rem 0rem 5rem 1rem !important;
           }
         }

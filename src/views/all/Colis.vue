@@ -9,14 +9,19 @@
             <th>Expediteur</th>
             <th>Destinataire</th>
             <th>Pays</th>
-            <th>Valeur</th>
+            <th>Prix</th>
           </tr>
-          <tr v-for="(ems, index) in colis" :key="index" class="data" @click="go(ems._id)">
+          <tr
+            v-for="(ems, index) in colis"
+            :key="index"
+            class="data"
+            @click="go(ems._id)"
+          >
             <td>{{ index + 1 }}</td>
             <td>{{ ems.from.name }}</td>
             <td>{{ ems.to.name }}</td>
             <td>{{ ems.to.country }}</td>
-            <td>{{ ems.to.value }}</td>
+            <td>{{ ems.to.price }}</td>
           </tr>
         </table>
       </div>
@@ -36,7 +41,18 @@
 import ems from '../../services/ems'
 export default {
   data: () => ({
-    date: '',
+    date:
+      new Date().getDate() < 10
+        ? new Date().getFullYear() +
+            '-' +
+            (new Date().getMonth() + 1) +
+            '-0' +
+            new Date().getDate()
+        : new Date().getFullYear() +
+            '-' +
+            (new Date().getMonth() + 1) +
+            '-' +
+            new Date().getDate(),
     max:
       new Date().getFullYear() +
       '-' +
@@ -49,6 +65,7 @@ export default {
   mounted () {
     ems.getAllEms({ date: this.date }).then(ems => {
       this.colis = ems.data
+      console.log(ems.data)
     })
   },
   methods: {
@@ -61,8 +78,12 @@ export default {
         this.colis = ems.data
       })
     },
-    go (id) {
-      this.$router.push({ path: '/review', query: { id } })
+    go (ems) {
+      if (ems.to.zone) {
+        this.$router.push({ path: '/express-review', query: { id: ems._id } })
+      } else {
+        this.$router.push({ path: '/review', query: { id: ems._id } })
+      }
     }
   }
 }
@@ -89,15 +110,18 @@ export default {
     &-table {
       font-family: quick;
       font-size: 1.5rem;
-      .data{
-        &:hover{
+      .data {
+        &:hover {
           background: #263238;
           color: white;
         }
       }
-      td{
+      td {
         cursor: pointer;
         padding: 1rem 1rem 1rem 1rem;
+      }
+      th{
+                padding: 1rem 1rem 1rem 1rem;
 
       }
     }
