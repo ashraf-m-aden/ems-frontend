@@ -7,6 +7,7 @@ import ALLCOLIS from '../views/all/Colis.vue'
 import REVIEW from '../views/colis/Review.vue'
 import EXPRESSREVIEW from '../views/express/Review.vue'
 import EXPRESS from '../views/express/Express.vue'
+import STATISTIQUE from '../views/Stats/Index.vue'
 import LOGIN from '../views/Login.vue'
 
 Vue.use(VueRouter)
@@ -69,6 +70,18 @@ const routes = [
     path: '/express-review',
     name: 'Express REVIEW',
     component: EXPRESSREVIEW,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
+  },
+  {
+    path: '/statistiques',
+    name: 'Statistique',
+    component: STATISTIQUE,
     beforeEnter: (to, from, next) => {
       if (store.getters.getConnected) {
         next()

@@ -35,8 +35,7 @@
         </router-link>
       </div>
       <v-spacer></v-spacer>
-      <template>
-        <v-row justify="space-around" class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between menu">
           <router-link to="/all-ems" v-show="connected">
             <v-icon large color="#FAFAFA ">
               mdi-calendar
@@ -53,8 +52,8 @@
           <v-icon large color="#FAFAFA " v-show="connected" @click="logout">
             mdi-logout
           </v-icon>
-        </v-row>
-      </template></v-app-bar
+        </div>
+      </v-app-bar
     >
   </div>
 </template>
@@ -99,6 +98,16 @@ export default {
   display: flex;
   justify-content: space-around;
   width: 30%;
+
+  &-btn {
+    text-decoration: none;
+    color: white !important;
+  }
+}
+.menu {
+  display: flex;
+  justify-content: space-around;
+  width: 10%;
 
   &-btn {
     text-decoration: none;

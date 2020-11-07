@@ -21,6 +21,11 @@ export default {
     return ems.post('/ems', {
       params: data
     })
+  },
+  updateEmsStats (data) {
+    return ems.post('/ems-stats', {
+      params: data
+    })
   }
 
 }

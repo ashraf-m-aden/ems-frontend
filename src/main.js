@@ -7,6 +7,9 @@ import vuetify from './plugins/vuetify'
 import styles from './sass/main.scss'
 import VueHtmlToPaper from 'vue-html-to-paper'
 import './fonts/fontstyle.scss'
+import Chart from 'vue2-frappe'
+
+Vue.use(Chart)
 const options = {
   name: '_blank',
   specs: [

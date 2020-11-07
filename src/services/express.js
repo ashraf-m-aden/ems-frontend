@@ -21,6 +21,11 @@ export default {
     return express.post('/express', {
       params: data
     })
+  },
+  updateExpressStats (data) {
+    return express.post('/express-stats', {
+      params: data
+    })
   }
 
 }

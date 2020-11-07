@@ -260,7 +260,6 @@ export default {
         this.from.weight !== undefined &&
         this.from.weight !== 0
       ) {
-        console.log(weight)
         price.getExpressPrice({ weight, zone }).then(price => {
           this.to.price = price.data
           this.message = ''
@@ -271,10 +270,12 @@ export default {
     },
     saveExpress () {
       express.postexpress({ to: this.to, from: this.from }).then(() => {
-        this.notif = true
-        setTimeout(() => {
-          this.notif = false
-        }, 2000)
+        express.updateExpressStats({ to: this.to, from: this.from }).then(() => {
+          this.notif = true
+          setTimeout(() => {
+            this.notif = false
+          }, 2000)
+        })
       })
     },
     syncDate () {

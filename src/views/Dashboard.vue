@@ -1,10 +1,8 @@
 <template>
   <div class="dashboard">
-    <div class="card" @click="goEMS">
-      <v-img class="img" src="../assets/ems.jpg"></v-img>
-      <h2>EMS</h2>
+    <div class="card">
     </div>
-    <div class="card" @click="goExpress">
+    <div class="card">
       <v-img class="img" max-width="250" src="../assets/de.png"></v-img>
       <h2>Colis express</h2>
     </div>
@@ -12,8 +10,9 @@
 </template>
 
 <script>
+
 export default {
-  components: {},
+
   data () {
     return {
       output: null
@@ -41,8 +40,8 @@ export default {
   flex-direction: column;
   align-content: center;
   margin-top: 10rem;
-  width: 30%;
-  border: 1px solid $color-secondary ;
+  width: 40%;
+  border: 1px solid $color-secondary;
   border-radius: 20%;
   cursor: pointer;
   .img {
