@@ -42,6 +42,10 @@ export const actions = {
   },
   setConnected ({ commit }, connected) {
     commit('SET_CONNECTED', connected)
+  },
+  checkUser ({ commit, dispatch }, data) {
+    commit('SET_USER', data)
+    dispatch('setConnected', true)
   }
 
 }

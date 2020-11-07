@@ -5,7 +5,8 @@
       <div class="all-data-table">
         <table>
           <tr>
-            <th><img src="../../assets/ems.jpg" width="100" alt="" /></th>
+            <th>#</th>
+            <th>Type</th>
             <th>Expediteur</th>
             <th>Destinataire</th>
             <th>Pays</th>
@@ -18,6 +19,20 @@
             @click="go(ems)"
           >
             <td>{{ index + 1 }}</td>
+            <td>
+              <img
+                v-if="ems.type === 1"
+                src="../../assets/ems.jpg"
+                alt=""
+                width="50"
+              />
+                <img
+                v-if="ems.type === 2"
+                src="../../assets/de.png"
+                alt=""
+                width="50"
+              />
+            </td>
             <td>{{ ems.from.name }}</td>
             <td>{{ ems.to.name }}</td>
             <td>{{ ems.to.country }}</td>

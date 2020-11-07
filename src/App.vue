@@ -15,9 +15,7 @@ export default {
     if (localStorage.getItem('id') && localStorage.getItem('token')) {
       this.$store.dispatch('setConnected', true)
       login.getUser(localStorage.getItem('id')).then(async (user) => {
-        await this.$store.dispatch('setUser', user.data)
-        await this.$store.dispatch('setConnected', true)
-        this.$router.push('/')
+        await this.$store.dispatch('checkUser', user.data)
       })
     }
   }

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/index'
 import Dashboard from '../views/Dashboard.vue'
 import COLIS from '../views/colis/Colis.vue'
 import ALLCOLIS from '../views/all/Colis.vue'
@@ -19,32 +20,74 @@ const routes = [
   {
     path: '/colis-ems',
     name: 'Colis',
-    component: COLIS
+    component: COLIS,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
   },
   {
     path: '/all-ems',
     name: 'Tous les colis ems',
-    component: ALLCOLIS
+    component: ALLCOLIS,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
   },
   {
     path: '/review',
     name: 'Review',
-    component: REVIEW
+    component: REVIEW,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
   },
   {
     path: '/express',
     name: 'Express',
-    component: EXPRESS
+    component: EXPRESS,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
   },
   {
     path: '/express-review',
     name: 'Express REVIEW',
-    component: EXPRESSREVIEW
+    component: EXPRESSREVIEW,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
   },
   {
     path: '/login',
     name: 'LOGIN',
-    component: LOGIN
+    component: LOGIN,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('id')) {
+        next({ name: 'Dashboard' })
+      } else {
+        next()
+      }
+    }
   }
 ]
 
@@ -53,5 +96,4 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
 export default router

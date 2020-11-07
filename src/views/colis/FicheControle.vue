@@ -308,7 +308,8 @@ export default {
       }
     },
     saveEms () {
-      ems.postEms({ to: this.to, from: this.from }).then(() => {
+      var agent = this.$store.getters.getUser.name
+      ems.postEms({ to: this.to, from: this.from, agent }).then(() => {
         this.notif = true
         setTimeout(() => {
           this.notif = false
