@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import ems from './ems'
 import express from './express'
 import print from './print'
+import user from './user'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,6 +14,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    ems, express, print
+    ems, express, print, user
   }
 })

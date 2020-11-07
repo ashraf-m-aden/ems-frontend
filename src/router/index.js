@@ -6,6 +6,7 @@ import ALLCOLIS from '../views/all/Colis.vue'
 import REVIEW from '../views/colis/Review.vue'
 import EXPRESSREVIEW from '../views/express/Review.vue'
 import EXPRESS from '../views/express/Express.vue'
+import LOGIN from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/express-review',
     name: 'Express REVIEW',
     component: EXPRESSREVIEW
+  },
+  {
+    path: '/login',
+    name: 'LOGIN',
+    component: LOGIN
   }
 ]
 

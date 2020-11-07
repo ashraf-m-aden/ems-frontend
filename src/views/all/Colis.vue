@@ -15,7 +15,7 @@
             v-for="(ems, index) in colis"
             :key="index"
             class="data"
-            @click="go(ems._id)"
+            @click="go(ems)"
           >
             <td>{{ index + 1 }}</td>
             <td>{{ ems.from.name }}</td>
@@ -44,15 +44,15 @@ export default {
     date:
       new Date().getDate() < 10
         ? new Date().getFullYear() +
-            '-' +
-            (new Date().getMonth() + 1) +
-            '-0' +
-            new Date().getDate()
+          '-' +
+          (new Date().getMonth() + 1) +
+          '-0' +
+          new Date().getDate()
         : new Date().getFullYear() +
-            '-' +
-            (new Date().getMonth() + 1) +
-            '-' +
-            new Date().getDate(),
+          '-' +
+          (new Date().getMonth() + 1) +
+          '-' +
+          new Date().getDate(),
     max:
       new Date().getFullYear() +
       '-' +
@@ -65,21 +65,19 @@ export default {
   mounted () {
     ems.getAllEms({ date: this.date }).then(ems => {
       this.colis = ems.data
-      console.log(ems.data)
     })
   },
   methods: {
     chooseDate (event) {
       this.title = event
       if (new Date() === new Date(event)) {
-        console.log('ok')
       }
       ems.getAllEms({ date: this.date }).then(ems => {
         this.colis = ems.data
       })
     },
     go (ems) {
-      if (ems.to.zone) {
+      if (ems.type === 2) {
         this.$router.push({ path: '/express-review', query: { id: ems._id } })
       } else {
         this.$router.push({ path: '/review', query: { id: ems._id } })
@@ -120,9 +118,8 @@ export default {
         cursor: pointer;
         padding: 1rem 1rem 1rem 1rem;
       }
-      th{
-                padding: 1rem 1rem 1rem 1rem;
-
+      th {
+        padding: 1rem 1rem 1rem 1rem;
       }
     }
   }

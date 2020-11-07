@@ -5,10 +5,21 @@
   </div>
 </template>
 <script>
+import login from './services/login'
 import HEADER from './components/header'
 export default {
   components: {
     HEADER
+  },
+  mounted () {
+    if (localStorage.getItem('id') && localStorage.getItem('token')) {
+      this.$store.dispatch('setConnected', true)
+      login.getUser(localStorage.getItem('id')).then(async (user) => {
+        await this.$store.dispatch('setUser', user.data)
+        await this.$store.dispatch('setConnected', true)
+        this.$router.push('/')
+      })
+    }
   }
 
 }
