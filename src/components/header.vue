@@ -73,12 +73,11 @@ export default {
       login
         .logout()
         .then(async () => {
-          await this.$store.dispatch('logoutUser')
           await this.$store.dispatch('setConnected', false)
-
-          console.log(this.$router)
+          await this.$store.dispatch('logoutUser')
         })
         .catch(() => {
+          this.$store.dispatch('setConnected', false)
           this.$store.dispatch('logoutUser')
         })
     }

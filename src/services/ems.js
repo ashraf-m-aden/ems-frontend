@@ -13,6 +13,9 @@ export default {
   getEms (id) {
     return ems.get('/ems/' + id)
   },
+  getToday () {
+    return ems.get('/emsToday')
+  },
   getAllEms (date) {
     return ems.post('/allEms',
       { params: date })

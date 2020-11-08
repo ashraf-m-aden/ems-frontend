@@ -13,6 +13,9 @@ export default {
   getexpress (id) {
     return express.get('/express/' + id)
   },
+  getToday () {
+    return express.get('/expressToday')
+  },
   getAllexpress (date) {
     return express.post('/allexpress',
       { params: date })

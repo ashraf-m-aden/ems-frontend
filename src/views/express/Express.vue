@@ -119,7 +119,7 @@
             <tr>
               <td><textarea v-model="from.object" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
               <td><textarea v-model="from.number" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
-              <td><input v-model="from.weight" type="number" class="form-control triple"></td>
+              <td><input v-model="from.weight" @change="getPrice" type="number" class="form-control triple"></td>
               <td><textarea v-model="from.value" class="form-control" name="" id="" cols="20" rows="8"></textarea></td>
             </tr>
             <tr>
@@ -251,21 +251,25 @@ export default {
 
     getPrice () {
       const zone = this.to.zone
-      var weight = this.from.weight.toString()
-      weight = Math.ceil((parseFloat(this.from.weight)))
+      var weight = this.from.weight
+      try {
+        weight = Math.ceil((parseFloat(this.from.weight)))
 
-      if (
-        this.to.zone !== '' &&
+        if (
+          this.to.zone !== '' &&
         this.from.weight !== null &&
         this.from.weight !== undefined &&
         this.from.weight !== 0
-      ) {
-        price.getExpressPrice({ weight, zone }).then(price => {
-          this.to.price = price.data
-          this.message = ''
-        })
-      } else {
-        this.message = "Pas assez d'informations pour afficher un prix"
+        ) {
+          price.getExpressPrice({ weight, zone }).then(price => {
+            this.to.price = price.data
+            this.message = ''
+          })
+        } else {
+          this.message = "Pas assez d'informations pour afficher un prix"
+        }
+      } catch (error) {
+
       }
     },
     saveExpress () {

@@ -27,11 +27,10 @@ export const mutations = {
 
 }
 export const actions = {
-  setUser ({ commit, dispatch }, data) {
+  setUser ({ commit }, data) {
     commit('SET_USER', data)
     localStorage.setItem('id', data.user._id)
     localStorage.setItem('token', data.token)
-    dispatch('setConnected', true)
   },
   logoutUser ({ commit }) {
     commit('SET_USER', {})
@@ -45,7 +44,6 @@ export const actions = {
   },
   checkUser ({ commit, dispatch }, data) {
     commit('SET_USER', data)
-    dispatch('setConnected', true)
   }
 
 }

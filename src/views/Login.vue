@@ -7,7 +7,7 @@
         <input type="text" class="form-control" v-model="email" />
         <label>Mot de passe</label>
         <input
-          type="text"
+          type="password"
           class="form-control"
           v-model="mdp"
           @keypress.enter="login"

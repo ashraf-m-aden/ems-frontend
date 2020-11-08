@@ -356,7 +356,6 @@ export default {
         this.from.weight !== undefined &&
         this.from.weight !== 0
       ) {
-        console.log(weight)
         price.getExpressPrice({ weight, zone }).then(price => {
           this.to.price = price.data
           this.message = ''
