@@ -1,10 +1,10 @@
 import axios from 'axios'
 const ems = axios.create({
-  baseURL: 'https://colis-backend.herokuapp.com', // https://colis-backend.herokuapp.com
+  baseURL: 'https://colis-backend.herokuapp.com' // https://colis-backend.herokuapp.com
 
   // baseURL: 'http://localhost:3000' // https://colis-backend.herokuapp.com
 })
-ems.interceptors.request.use((config) => {
+ems.interceptors.request.use(config => {
   config.headers.common.Authorization =
     'Bearer ' + localStorage.getItem('token')
   return config
@@ -17,8 +17,7 @@ export default {
     return ems.get('/emsToday')
   },
   getAllEms (date) {
-    return ems.post('/allEms',
-      { params: date })
+    return ems.post('/allEms', { params: date })
   },
   postEms (data) {
     return ems.post('/ems', {
@@ -30,5 +29,4 @@ export default {
       params: data
     })
   }
-
 }
