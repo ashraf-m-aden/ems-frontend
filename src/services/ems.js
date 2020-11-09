@@ -1,8 +1,6 @@
 import axios from 'axios'
 const ems = axios.create({
-  baseURL: 'https://colis-backend.herokuapp.com' // https://colis-backend.herokuapp.com
-
-  // baseURL: 'http://localhost:3000' // https://colis-backend.herokuapp.com
+  baseURL: process.env.VUE_APP_BACKEND
 })
 ems.interceptors.request.use(config => {
   config.headers.common.Authorization =

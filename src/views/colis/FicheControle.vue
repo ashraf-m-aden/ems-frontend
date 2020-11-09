@@ -1,6 +1,6 @@
 <template>
   <div class="control">
-        <span class="code">CP71</span>
+    <span class="code">CP71</span>
     <v-alert
       :value="notif"
       color="#1A237E"
@@ -36,84 +36,99 @@
     <div class="control-body">
       <div class="left">
         <div class="from">
-          <span for="name">NOM:</span>
-          <input
-            v-model="from.name"
-            @input="syncData"
-            type="text"
-            id="name"
-          /><br />
-          <span for="tel">TEL:</span>
-          <input
-            v-model="from.tel"
-            @input="syncData"
-            type="text"
-            id="tel"
-          /><br />
-          <span for="code">Code Postale:</span>
-          <input
-            @input="syncData"
-            v-model="from.cp"
-            type="text"
-            class="codeville"
-          />
-          <span for="ville">Ville:</span>
-          <input
-            @input="syncData"
-            type="text"
-            v-model="from.town"
-            class="codeville"
-          /><br />
-          <strong>Djibouti</strong>
+          <table>
+            <tr>
+              <td class="pr-5">EXP</td>
+              <td class="border-left">
+                <span for="name">NOM:</span>
+                <input
+                  v-model="from.name"
+                  @input="syncData"
+                  type="text"
+                  id="name"
+                /><br />
+                <span for="tel">TEL:</span>
+                <input
+                  v-model="from.tel"
+                  @input="syncData"
+                  type="text"
+                  id="tel"
+                /><br />
+                <span for="code">Code Postale:</span>
+                <input
+                  @input="syncData"
+                  v-model="from.cp"
+                  type="text"
+                  class="codeville"
+                />
+                <span for="ville">Ville:</span>
+                <input
+                  @input="syncData"
+                  type="text"
+                  v-model="from.town"
+                  class="codeville"
+                /><br />
+                <strong>Djibouti</strong>
+              </td>
+            </tr>
+          </table>
+
           <div class="douane">
             Reference douane de l'expediteur (si elle existe)
           </div>
         </div>
         <div class="to">
-          <span for="nameTo">NOM:</span>
-          <input
-            @input="syncData"
-            type="text"
-            id="nameTo"
-            v-model="to.name"
-          /><br />
-          <span for="address">ADDRESSE:</span>
-          <input
-            @input="syncData"
-            type="text"
-            id="address"
-            v-model="to.address"
-          /><br />
-          <span for="tel2">TEL:</span>
-          <input
-            @input="syncData"
-            type="text"
-            v-model="to.tel"
-            id="tel2"
-          /><br />
-          <span for="tel2">Code Postale:</span>
-          <input
-            @input="syncData"
-            type="text"
-            class="codeville"
-            v-model="to.cp"
-          />
-          <span for="tel2">Ville:</span>
-          <input
-            @input="syncData"
-            type="text"
-            class="codeville"
-            v-model="to.town"
-          /><br />
-          <span for="pays">Pays:</span>
-          <select name="" id="" v-model="to.country">
-            <option
-              v-for="(country, index) in countries"
-              :key="index"
-              :value="country.name"
-              >{{ country.name }}</option
-            >
-          </select>
+          <table>
+           <tr>
+              <td class="pr-5">DEST</td>
+            <td class="border-left">
+              <span for="nameTo">NOM:</span>
+              <input
+                @input="syncData"
+                type="text"
+                id="nameTo"
+                v-model="to.name"
+              /><br />
+              <span for="address">ADDRESSE:</span>
+              <input
+                @input="syncData"
+                type="text"
+                id="address"
+                v-model="to.address"
+              /><br />
+              <span for="tel2">TEL:</span>
+              <input
+                @input="syncData"
+                type="text"
+                v-model="to.tel"
+                id="tel2"
+              /><br />
+              <span for="tel2">Code Postale:</span>
+              <input
+                @input="syncData"
+                type="text"
+                class="codeville"
+                v-model="to.cp"
+              />
+              <span for="tel2">Ville:</span>
+              <input
+                @input="syncData"
+                type="text"
+                class="codeville"
+                v-model="to.town"
+              /><br />
+              <span for="pays">Pays:</span>
+              <select name="" id="" v-model="to.country">
+                <option
+                  v-for="(country, index) in countries"
+                  :key="index"
+                  :value="country.name"
+                  >{{ country.name }}</option
+                >
+              </select>
+            </td>
+           </tr>
+          </table>
         </div>
         <div class="infos">
           <div class="infos-details">
@@ -153,8 +168,9 @@
                 >
               </div>
               <div style="padding-left:2rem; cursor:pointer">
-                <h4 @click="syncDate">Date et signature de l’expéditeur</h4> <br />
-                <h4>{{to.date}}</h4>
+                <h4 @click="syncDate">Date et signature de l’expéditeur</h4>
+                <br />
+                <h4>{{ to.date }}</h4>
               </div>
             </li>
           </ul>
@@ -290,7 +306,7 @@ export default {
     },
     getPrice () {
       var weight = this.to.weight.toString()
-      weight = Math.ceil((parseFloat(this.to.weight)))
+      weight = Math.ceil(parseFloat(this.to.weight))
       const country = this.to.country
       if (
         this.to.country !== '' &&
@@ -321,18 +337,18 @@ export default {
     syncDate () {
       if (new Date().getDate() < 10) {
         this.to.date =
-        new Date().getFullYear() +
-        '-' +
-        (new Date().getMonth() + 1) +
-        '-0' +
-        new Date().getDate()
+          new Date().getFullYear() +
+          '-' +
+          (new Date().getMonth() + 1) +
+          '-0' +
+          new Date().getDate()
       } else {
         this.to.date =
-        new Date().getFullYear() +
-        '-' +
-        (new Date().getMonth() + 1) +
-        '-' +
-        new Date().getDate()
+          new Date().getFullYear() +
+          '-' +
+          (new Date().getMonth() + 1) +
+          '-' +
+          new Date().getDate()
       }
       this.syncData()
     }
@@ -349,9 +365,9 @@ export default {
 @import "../../sass/main.scss";
 
 .control {
-    position: relative;
-    padding-top: 1rem;
-  .code{
+  position: relative;
+  padding-top: 1rem;
+  .code {
     position: absolute;
     top: 0;
     right: 0;

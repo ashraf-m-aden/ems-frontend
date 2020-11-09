@@ -25,7 +25,7 @@
             </v-icon>
           </button>
         </router-link>
-        <router-link to="/" class="work-btn">
+        <router-link to="/lettres" class="work-btn">
           <button class="work-btn">
             Lettres
             <v-icon color="#ffffff">

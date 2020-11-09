@@ -5,7 +5,7 @@
         {{ user }}
       </div>
       <div class="header-consignes">
-        Les chiffres relatifs aux colis aujourd'hui.
+        Les chiffres relatifs aux colis d'aujourd'hui.
       </div>
     </div>
     <div class="colis">

@@ -1,8 +1,7 @@
 import axios from 'axios'
 const login = axios.create({
-  baseURL: 'https://colis-backend.herokuapp.com' // https://colis-backend.herokuapp.com
+  baseURL: process.env.VUE_APP_BACKEND
 
-  // baseURL: 'http://localhost:3000' // https://colis-backend.herokuapp.com
 })
 login.interceptors.request.use((config) => {
   config.headers.common.Authorization =

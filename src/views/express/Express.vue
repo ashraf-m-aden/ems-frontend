@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="right">
-          <textarea name="" class="form-control" id="" cols="30" rows="2"></textarea>
+          <textarea v-model="to.isNumber" cols="30" rows="2"></textarea>
         </div>
       </div>
       <div class="express-body-info">
@@ -220,7 +220,7 @@ export default {
         number: '',
         weight: '',
         value: '',
-        etiquette: '',
+        isNumber: '',
         date: '',
         hour: ''
       },

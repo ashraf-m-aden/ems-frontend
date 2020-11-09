@@ -1,8 +1,7 @@
 import axios from 'axios'
 const price = axios.create({
-  baseURL: 'https://colis-backend.herokuapp.com' // https://colis-backend.herokuapp.com
+  baseURL: process.env.VUE_APP_BACKEND
 
-  // baseURL: 'http://localhost:3000' // https://colis-backend.herokuapp.com
 })
 price.interceptors.request.use((config) => {
   config.headers.common.Authorization =
@@ -17,6 +16,11 @@ export default {
   },
   getExpressPrice (data) {
     return price.post('/zoneprice', {
+      params: data
+    })
+  },
+  getlettrePrice (data) {
+    return price.post('/lettrePrice', {
       params: data
     })
   },

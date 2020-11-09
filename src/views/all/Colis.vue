@@ -32,6 +32,12 @@
                 alt=""
                 width="50"
               />
+                              <img
+                v-if="ems.type === 3"
+                src="../../assets/courrier.jpg"
+                alt=""
+                width="50"
+              />
             </td>
             <td>{{ ems.from.name }}</td>
             <td>{{ ems.to.name }}</td>

@@ -7,6 +7,8 @@ import ALLCOLIS from '../views/all/Colis.vue'
 import REVIEW from '../views/colis/Review.vue'
 import EXPRESSREVIEW from '../views/express/Review.vue'
 import EXPRESS from '../views/express/Express.vue'
+import LETTRES from '../views/Lettre/Lettre.vue'
+import LETTREREVIEW from '../views/Lettre/Review.vue'
 import STATISTIQUE from '../views/Stats/Index.vue'
 import LOGIN from '../views/Login.vue'
 
@@ -70,6 +72,30 @@ const routes = [
     path: '/express-review',
     name: 'Express REVIEW',
     component: EXPRESSREVIEW,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
+  },
+  {
+    path: '/lettres',
+    name: 'LETTRES',
+    component: LETTRES,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
+  },
+  {
+    path: '/lettre-review',
+    name: 'LETTRE REVIEW',
+    component: LETTREREVIEW,
     beforeEnter: (to, from, next) => {
       if (store.getters.getConnected) {
         next()
