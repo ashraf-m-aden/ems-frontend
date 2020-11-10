@@ -1,5 +1,32 @@
 <template>
   <div class="lettres">
+    <div class="header">
+        <v-alert
+      :value="notif"
+      color="#1A237E"
+      dark
+      dismissible
+      border="top"
+      transition="scale-transition"
+      width="200px"
+    >
+      Colis enregistré</v-alert
+    >
+        <div class="dropdown dropleft">
+        <img
+          src="../../assets/mort_vert.png"
+          class="menu dropdown-toggle"
+          alt=""
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        />
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <span class="dropdown-item btn" @click="saveLettre">Enregistrer</span>
+        </div>
+      </div>
+    </div>
     <div class="lettres-info">
       <div class="from">
         <div class="title">Expediteur</div>
@@ -122,6 +149,66 @@
         <div class="list">
           <table>
             <tr>
+              <td>
+                <label class="form-check-label mr-2" for="gridRadios1"
+                  >Regime interieur</label
+                ><input
+                  @change="getZone"
+                  value="Regime interieur"
+                  class="form-check-input"
+                  type="radio"
+                  name="gridRadios"
+                  id="gridRadios1"
+                />
+              </td>
+              <td>
+                <label class="form-check-label mr-2" for="gridRadios2"
+                  >Regime international</label
+                ><input
+                  @change="getZone"
+                  value="Regime international"
+                  class="form-check-input"
+                  type="radio"
+                  name="gridRadios"
+                  id="gridRadios2"
+                />
+              </td>
+              <td>
+                <label class="form-check-label mr-2" for="gridRadios3"
+                  >Petit paquet</label
+                ><input
+                  @change="getZone"
+                  value="Petit paquet"
+                  class="form-check-input"
+                  type="radio"
+                  name="gridRadios"
+                  id="gridRadios3"
+                />
+              </td>
+            </tr>
+            <td colspan="3" class="border-none">
+              <select
+                class="form-control"
+                v-model="to.zone"
+                v-if="to.type === 'Petit paquet' || to.type === 'Regime international'"
+              >
+                <option value="Zone 1">Zone 1 </option>
+                <option value="Zone 2">Zone 2 </option>
+                <option value="Zone 3">Zone 3 </option>
+              </select>
+              <select
+                class="form-control"
+                v-model="to.zone"
+                v-if="to.type === 'Regime interieur'"
+              >
+                <option value="Djibouti-ville">Djibouti-ville </option>
+                <option value="District">District </option>
+              </select>
+            </td>
+          </table>
+
+          <table>
+            <tr>
               <td>Poids / Prix</td>
               <td>
                 <input
@@ -130,6 +217,7 @@
                   class="form-control"
                   @keypress.enter="getPrice"
                 />
+                <span class="error">{{ message }}</span>
               </td>
               <td>
                 <input
@@ -173,11 +261,14 @@ export default {
         country: '',
         object: '',
         value: '',
+        type: '',
+        zone: '',
         weight: '',
         date: '',
         price: '',
         idNumber: ''
       },
+      zones: [],
       message: '',
       notif: false
     }
@@ -191,25 +282,37 @@ export default {
   },
   methods: {
     getPrice () {
-      const country = this.to.country
-      var weight = this.to.weight
+      const zone = this.to.zone
+      this.message = ''
       try {
-        weight = Math.ceil(parseFloat(this.to.weight))
-
+        var weight = this.getWeight(parseInt(this.to.weight), this.to.type)
         if (
-          this.to.country !== '' &&
-          this.to.weight !== null &&
-          this.to.weight !== undefined &&
-          this.to.weight !== 0
+          zone !== '' &&
+          weight !== null &&
+          weight !== undefined &&
+          weight !== 0
         ) {
-          price.getlettrePrice({ weight, country }).then(price => {
-            this.to.price = price.data
-            this.message = ''
+          this.zones.forEach(z => {
+            if (parseInt(z.weight) === weight && z.zone === zone) {
+              this.to.price = z.price
+            }
           })
         } else {
-          this.message = "Pas assez d'informations pour afficher un prix"
+          this.message =
+            "Pas assez d'informations, ou mauvais poids enregistré."
+          this.to.price = undefined
         }
       } catch (error) {}
+    },
+    getZone (event) {
+      const type = event.target.value
+      this.to.weight = undefined
+      this.to.price = ''
+      this.message = ''
+      this.to.type = type
+      price.getlettreZone({ type }).then(zones => {
+        this.zones = zones.data
+      })
     },
     saveLettre () {
       lettre.postlettre({ to: this.to, from: this.from }).then(() => {
@@ -237,6 +340,28 @@ export default {
           '-' +
           new Date().getDate()
       }
+    },
+    getWeight (weight, type) {
+      let result = 0
+      if (type === 'Regime interieur' || type === 'Regime international') {
+        if (weight > 0 && weight <= 20) {
+          result = 20
+        } else if (weight > 20 && weight <= 50) result = 50
+        else if (weight > 50 && weight <= 100) result = 100
+        else if (weight > 100 && weight <= 250) result = 250
+        else if (weight > 250 && weight <= 500) result = 500
+        else if (weight > 500 && weight <= 1000) result = 1000
+        else if (weight > 1000 && weight <= 1500) result = 1500
+        else if (weight > 1500 && weight <= 2000) result = 2000
+        else result = null
+      } else {
+        if (weight > 0 && weight <= 0.5) result = 0.5
+        else if (weight > 0.5 && weight <= 1) result = 1
+        else if (weight > 1 && weight <= 1.5) result = 1.5
+        else if (weight > 1.5 && weight <= 2) result = 2
+        else result = null
+      }
+      return result
     }
   },
   computed: {
@@ -248,7 +373,23 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../../sass/main.scss";
-
+.header{
+  position: relative;
+  padding-top: 2rem;
+  .code{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
+  }
+  .dropdown{
+    position: absolute;
+    right: 0;
+        .menu {
+      height: 25px;
+    }
+  }
+}
 .lettres {
   font-family: quick;
   width: 100%;
@@ -286,6 +427,9 @@ td {
   margin-top: 2rem;
   font-size: 2rem;
   margin-bottom: 3rem;
+}
+.error {
+  color: red;
 }
 .form-control {
   border-bottom: 1px dashed;

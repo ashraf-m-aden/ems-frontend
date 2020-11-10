@@ -12,7 +12,6 @@ export default {
     return lettre.get('/lettre/' + id)
   },
   getToday () {
-    console.log(process.env.VUE_APP_BACKEND)
     return lettre.get('/lettreToday')
   },
 

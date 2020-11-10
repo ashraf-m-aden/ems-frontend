@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wrapper-title">
-      {{title}}
+      {{ title }}
     </div>
     <v-card height="350px" class="card">
       <div class="data">
@@ -89,7 +89,6 @@ export default {
     }
   },
   methods: {
-
     getYear () {
       this.title = "L'année " + new Date().getFullYear()
 
@@ -125,6 +124,9 @@ export default {
         'Novembre',
         'Decembre'
       ]
+      this.data[0].values = []
+      this.data[1].values = []
+      this.data[2].values = []
 
       var ems = array.filter(x => {
         return x.type === 1
@@ -132,11 +134,17 @@ export default {
       var express = array.filter(x => {
         return x.type === 2
       })
+      var lettre = array.filter(x => {
+        return x.type === 3
+      })
       await ems.forEach(element => {
         this.data[0].values[new Date(element.month).getMonth()] = element.total
       })
       await express.forEach(element => {
         this.data[1].values[new Date(element.month).getMonth()] = element.total
+      })
+      await lettre.forEach(element => {
+        this.data[2].values[new Date(element.month).getMonth()] = element.total
       })
       for (let index = 0; index < 12; index++) {
         if (this.data[0].values[index] === undefined) {
@@ -146,6 +154,11 @@ export default {
       for (let index = 0; index < 12; index++) {
         if (this.data[1].values[index] === undefined) {
           this.data[1].values[index] = 0
+        }
+      }
+      for (let index = 0; index < 12; index++) {
+        if (this.data[2].values[index] === undefined) {
+          this.data[2].values[index] = 0
         }
       }
     },
@@ -166,12 +179,19 @@ export default {
       var express = array.filter(x => {
         return x.type === 2
       })
+      var lettre = array.filter(x => {
+        return x.type === 3
+      })
       await ems.forEach(element => {
         this.data[0].values[new Date(element.date).getDate() - 1] =
           element.total
       })
       await express.forEach(element => {
         this.data[1].values[new Date(element.date).getDate() - 1] =
+          element.total
+      })
+      await lettre.forEach(element => {
+        this.data[2].values[new Date(element.date).getDate() - 1] =
           element.total
       })
       for (let index = 0; index < numberofdays; index++) {
@@ -182,6 +202,11 @@ export default {
       for (let index = 0; index < numberofdays; index++) {
         if (this.data[1].values[index] === undefined) {
           this.data[1].values[index] = 0
+        }
+      }
+      for (let index = 0; index < numberofdays; index++) {
+        if (this.data[2].values[index] === undefined) {
+          this.data[2].values[index] = 0
         }
       }
     }
@@ -195,7 +220,6 @@ export default {
   font-family: quick;
   font-size: 2rem;
   margin-top: 2rem;
-
 }
 .card {
   margin-top: 5rem;

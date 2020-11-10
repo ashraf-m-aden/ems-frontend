@@ -24,6 +24,11 @@ export default {
       params: data
     })
   },
+  getlettreZone (type) {
+    return price.post('/lettrezone', {
+      params: type
+    })
+  },
   getCountry () {
     return price.get('/allCountry')
   },

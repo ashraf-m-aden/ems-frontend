@@ -2,7 +2,7 @@
   <div class="all">
     <div class="all-data">
       <h2 class="title">{{ title }}</h2>
-      <div class="all-data-table">
+      <!-- <div class="all-data-table">
         <table>
           <tr>
             <th>#</th>
@@ -26,13 +26,13 @@
                 alt=""
                 width="50"
               />
-                <img
+              <img
                 v-if="ems.type === 2"
                 src="../../assets/de.png"
                 alt=""
                 width="50"
               />
-                              <img
+              <img
                 v-if="ems.type === 3"
                 src="../../assets/courrier.jpg"
                 alt=""
@@ -45,15 +45,193 @@
             <td>{{ ems.to.price }}</td>
           </tr>
         </table>
+      </div> -->
+      <div class="all-data-table" data-app>
+        <v-container fluid>
+          <v-data-iterator
+            :items="colis"
+            :items-per-page.sync="itemsPerPage"
+            :page="page"
+            :search="search"
+            :sort-by="sortBy.toLowerCase()"
+            :sort-desc="sortDesc"
+            hide-default-footer
+          >
+            <template v-slot:default="props">
+              <table>
+                <tr>
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Expediteur</th>
+                  <th>Destinataire</th>
+                  <th>Pays</th>
+                  <th>Prix</th>
+                </tr>
+                <tr
+                  v-for="(ems, index) in props.items"
+                  :key="index"
+                  class="data"
+                  @click="go(ems)"
+                >
+                  <td>{{ index + 1 }}</td>
+                  <td>
+                    <img
+                      v-if="ems.type === 1"
+                      src="../../assets/ems.jpg"
+                      alt=""
+                      width="50"
+                    />
+                    <img
+                      v-if="ems.type === 2"
+                      src="../../assets/de.png"
+                      alt=""
+                      width="50"
+                    />
+                    <img
+                      v-if="ems.type === 3"
+                      src="../../assets/courrier.jpg"
+                      alt=""
+                      width="50"
+                    />
+                  </td>
+                  <td>{{ ems.from.name }}</td>
+                  <td>{{ ems.to.name }}</td>
+                  <td>{{ ems.to.country }}</td>
+                  <td>{{ ems.to.price }}</td>
+                </tr>
+              </table>
+            </template>
+
+            <!-- <template v-slot:footer>
+              <v-row class="mt-2" align="center" justify="center">
+                <span class="grey--text">Items per page</span>
+                <v-menu offset-y>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      dark
+                      text
+                      color="primary"
+                      class="ml-2"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      {{ itemsPerPage }}
+                      <v-icon>mdi-chevron-down</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item
+                      v-for="(number, index) in itemsPerPageArray"
+                      :key="index"
+                      @click="updateItemsPerPage(number)"
+                    >
+                      <v-list-item-title>{{ number }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+
+                <v-spacer></v-spacer>
+
+                <span
+                  class="mr-4
+            grey--text"
+                >
+                  Page {{ page }} of {{ numberOfPages }}
+                </span>
+                <v-btn
+                  fab
+                  dark
+                  color="blue darken-3"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                <v-btn
+                  fab
+                  dark
+                  color="blue darken-3"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+              </v-row>
+            </template> -->
+            <template v-slot:footer>
+              <div class="table-footer" >
+                <div>
+                  <span class="table-footer-entree">Nombre d'entrée</span>
+                <v-menu offset-y>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      dark
+                      text
+                      color="primary"
+                      class="ml-2"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      {{ itemsPerPage }}
+                      <v-icon>mdi-chevron-down</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item
+                      v-for="(number, index) in itemsPerPageArray"
+                      :key="index"
+                      @click="updateItemsPerPage(number)"
+                    >
+                      <v-list-item-title>{{ number }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+                </div>
+                <div><span
+                  class="mr-4
+            grey--text"
+                >
+                  Page {{ page }} / {{ numberOfPages }}
+                </span>
+                <v-btn
+                small
+                  fab
+                  dark
+                  color="#E6EE9C"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                <v-btn small
+                  fab
+                  dark
+                  color="#E6EE9C"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn></div>
+              </div>
+            </template>
+          </v-data-iterator>
+        </v-container>
       </div>
     </div>
     <div class="all-calendar">
+        <v-row justify="center">
+
       <v-date-picker
         v-model="date"
         class="mt-4"
         :max="max"
         @change="chooseDate"
+              color="#2A3B4D"
+      header-color="#1A237E"       year-icon="mdi-calendar-blank"
+      prev-icon="mdi-skip-previous"
+      next-icon="mdi-skip-next"
       ></v-date-picker>
+        </v-row>
     </div>
   </div>
 </template>
@@ -62,6 +240,13 @@
 import ems from '../../services/ems'
 export default {
   data: () => ({
+    itemsPerPageArray: [4, 8, 12],
+    search: '',
+    filter: {},
+    sortDesc: false,
+    page: 1,
+    itemsPerPage: 4,
+    sortBy: 'name',
     date:
       new Date().getDate() < 10
         ? new Date().getFullYear() +
@@ -88,7 +273,21 @@ export default {
       this.colis = ems.data
     })
   },
+  computed: {
+    numberOfPages () {
+      return Math.ceil(this.colis.length / this.itemsPerPage)
+    }
+  },
   methods: {
+    nextPage () {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1
+    },
+    formerPage () {
+      if (this.page - 1 >= 1) this.page -= 1
+    },
+    updateItemsPerPage (number) {
+      this.itemsPerPage = number
+    },
     chooseDate (event) {
       this.title = event
       if (new Date() === new Date(event)) {
@@ -146,6 +345,13 @@ export default {
   }
   &-calendar {
     border: solid black 1px;
+    border-left: none;
   }
+}
+.table-footer {
+  border-top: solid 1px $color-dark-grey;
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-around;
 }
 </style>

@@ -43,6 +43,23 @@
           </table>
         </div>
       </div>
+      <div class="colis-ems card">
+        <div class="title">
+          <img src="../assets/courrier.jpg" width="50" alt="" />
+        </div>
+        <div class="number">
+          <table>
+            <tr class="">
+              <td class="number-td">Nombre de colis envoyé:</td>
+              <td class="number-td chiffre">{{ lettreNumber }}</td>
+            </tr>
+            <tr class="">
+              <td class="number-td">Chiffres d'affaires:</td>
+              <td class="number-td chiffre">{{ lettrePrice }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -50,6 +67,7 @@
 <script>
 import ems from '../services/ems'
 import express from '../services/express'
+import lettre from '../services/lettre'
 export default {
   data () {
     return {
@@ -58,13 +76,18 @@ export default {
       emsPrice: 0,
       expressNumber: 0,
       expressPrice: 0,
+      lettreNumber: 0,
+      lettrePrice: 0,
       message: ''
     }
   },
   computed: {
     user () {
       var connected = this.$store.getters.getConnected
-      if (this.$store.getters.getConnected && this.$store.getters.getUser.user !== undefined) {
+      if (
+        this.$store.getters.getConnected &&
+        this.$store.getters.getUser.user !== undefined
+      ) {
         return 'Bonjour ' + this.$store.getters.getUser.user.name
       } else {
         connected = ''
@@ -86,6 +109,12 @@ export default {
       this.expressNumber = express.data.length
       express.data.forEach(element => {
         this.expressPrice += parseInt(element.to.price)
+      })
+    })
+    lettre.getToday().then(courrier => {
+      this.lettreNumber = courrier.data.length
+      courrier.data.forEach(element => {
+        this.lettrePrice += parseInt(element.to.price)
       })
     })
   },
@@ -124,6 +153,9 @@ export default {
   justify-content: space-around;
   &-ems {
     width: 30%;
+    border: #2A3B4D solid 2px;
+    border-radius: 10px;
+    padding: 1rem;
     .title {
       display: flex;
       font-family: quick;
