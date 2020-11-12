@@ -26,7 +26,7 @@ const routes = [
     name: 'Colis',
     component: COLIS,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -38,7 +38,7 @@ const routes = [
     name: 'Tous les colis ems',
     component: ALLCOLIS,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -50,7 +50,7 @@ const routes = [
     name: 'Review',
     component: REVIEW,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -62,7 +62,7 @@ const routes = [
     name: 'Express',
     component: EXPRESS,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -74,7 +74,7 @@ const routes = [
     name: 'Express REVIEW',
     component: EXPRESSREVIEW,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -86,7 +86,7 @@ const routes = [
     name: 'LETTRES',
     component: LETTRES,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -98,7 +98,7 @@ const routes = [
     name: 'LETTRE REVIEW',
     component: LETTREREVIEW,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -110,7 +110,7 @@ const routes = [
     name: 'Statistique',
     component: STATISTIQUE,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
@@ -122,7 +122,7 @@ const routes = [
     name: 'PROFIL',
     component: PROFIL,
     beforeEnter: (to, from, next) => {
-      if (store.getters.getConnected) {
+      if (store.getters.getConnected || localStorage.getItem('token')) {
         next()
       } else {
         next({ name: 'LOGIN' })
