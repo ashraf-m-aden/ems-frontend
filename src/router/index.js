@@ -11,6 +11,7 @@ import LETTRES from '../views/Lettre/Lettre.vue'
 import LETTREREVIEW from '../views/Lettre/Review.vue'
 import STATISTIQUE from '../views/Stats/Index.vue'
 import LOGIN from '../views/Login.vue'
+import PROFIL from '../views/Profil.vue'
 
 Vue.use(VueRouter)
 
@@ -108,6 +109,18 @@ const routes = [
     path: '/statistiques',
     name: 'Statistique',
     component: STATISTIQUE,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getConnected) {
+        next()
+      } else {
+        next({ name: 'LOGIN' })
+      }
+    }
+  },
+  {
+    path: '/profil',
+    name: 'PROFIL',
+    component: PROFIL,
     beforeEnter: (to, from, next) => {
       if (store.getters.getConnected) {
         next()

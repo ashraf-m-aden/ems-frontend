@@ -160,6 +160,7 @@
 export default {
 
   computed: {
+
     to () {
       return this.$store.getters.getTo
     },
@@ -168,6 +169,9 @@ export default {
     }
   },
   methods: {
+    go () {
+      this.$router.push('/')
+    }
 
   }
 }

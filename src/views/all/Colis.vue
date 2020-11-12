@@ -2,50 +2,7 @@
   <div class="all">
     <div class="all-data">
       <h2 class="title">{{ title }}</h2>
-      <!-- <div class="all-data-table">
-        <table>
-          <tr>
-            <th>#</th>
-            <th>Type</th>
-            <th>Expediteur</th>
-            <th>Destinataire</th>
-            <th>Pays</th>
-            <th>Prix</th>
-          </tr>
-          <tr
-            v-for="(ems, index) in colis"
-            :key="index"
-            class="data"
-            @click="go(ems)"
-          >
-            <td>{{ index + 1 }}</td>
-            <td>
-              <img
-                v-if="ems.type === 1"
-                src="../../assets/ems.jpg"
-                alt=""
-                width="50"
-              />
-              <img
-                v-if="ems.type === 2"
-                src="../../assets/de.png"
-                alt=""
-                width="50"
-              />
-              <img
-                v-if="ems.type === 3"
-                src="../../assets/courrier.jpg"
-                alt=""
-                width="50"
-              />
-            </td>
-            <td>{{ ems.from.name }}</td>
-            <td>{{ ems.to.name }}</td>
-            <td>{{ ems.to.country }}</td>
-            <td>{{ ems.to.price }}</td>
-          </tr>
-        </table>
-      </div> -->
+
       <div class="all-data-table" data-app>
         <v-container fluid>
           <v-data-iterator
@@ -101,117 +58,63 @@
                 </tr>
               </table>
             </template>
-
-            <!-- <template v-slot:footer>
-              <v-row class="mt-2" align="center" justify="center">
-                <span class="grey--text">Items per page</span>
-                <v-menu offset-y>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      dark
-                      text
-                      color="primary"
-                      class="ml-2"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      {{ itemsPerPage }}
-                      <v-icon>mdi-chevron-down</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item
-                      v-for="(number, index) in itemsPerPageArray"
-                      :key="index"
-                      @click="updateItemsPerPage(number)"
-                    >
-                      <v-list-item-title>{{ number }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-
-                <v-spacer></v-spacer>
-
-                <span
-                  class="mr-4
-            grey--text"
-                >
-                  Page {{ page }} of {{ numberOfPages }}
-                </span>
-                <v-btn
-                  fab
-                  dark
-                  color="blue darken-3"
-                  class="mr-1"
-                  @click="formerPage"
-                >
-                  <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
-                <v-btn
-                  fab
-                  dark
-                  color="blue darken-3"
-                  class="ml-1"
-                  @click="nextPage"
-                >
-                  <v-icon>mdi-chevron-right</v-icon>
-                </v-btn>
-              </v-row>
-            </template> -->
             <template v-slot:footer>
-              <div class="table-footer" >
+              <div class="table-footer">
                 <div>
                   <span class="table-footer-entree">Nombre d'entrée</span>
-                <v-menu offset-y>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      dark
-                      text
-                      color="primary"
-                      class="ml-2"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      {{ itemsPerPage }}
-                      <v-icon>mdi-chevron-down</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item
-                      v-for="(number, index) in itemsPerPageArray"
-                      :key="index"
-                      @click="updateItemsPerPage(number)"
-                    >
-                      <v-list-item-title>{{ number }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
+                  <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        dark
+                        text
+                        color="primary"
+                        class="ml-2"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ itemsPerPage }}
+                        <v-icon>mdi-chevron-down</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item
+                        v-for="(number, index) in itemsPerPageArray"
+                        :key="index"
+                        @click="updateItemsPerPage(number)"
+                      >
+                        <v-list-item-title>{{ number }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
                 </div>
-                <div><span
-                  class="mr-4
+                <div>
+                  <span
+                    class="mr-4
             grey--text"
-                >
-                  Page {{ page }} / {{ numberOfPages }}
-                </span>
-                <v-btn
-                small
-                  fab
-                  dark
-                  color="#E6EE9C"
-                  class="mr-1"
-                  @click="formerPage"
-                >
-                  <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
-                <v-btn small
-                  fab
-                  dark
-                  color="#E6EE9C"
-                  class="ml-1"
-                  @click="nextPage"
-                >
-                  <v-icon>mdi-chevron-right</v-icon>
-                </v-btn></div>
+                  >
+                    Page {{ page }} / {{ numberOfPages }}
+                  </span>
+                  <v-btn
+                    small
+                    fab
+                    dark
+                    color="#E6EE9C"
+                    class="mr-1"
+                    @click="formerPage"
+                  >
+                    <v-icon>mdi-chevron-left</v-icon>
+                  </v-btn>
+                  <v-btn
+                    small
+                    fab
+                    dark
+                    color="#E6EE9C"
+                    class="ml-1"
+                    @click="nextPage"
+                  >
+                    <v-icon>mdi-chevron-right</v-icon>
+                  </v-btn>
+                </div>
               </div>
             </template>
           </v-data-iterator>
@@ -219,19 +122,19 @@
       </div>
     </div>
     <div class="all-calendar">
-        <v-row justify="center">
-
-      <v-date-picker
-        v-model="date"
-        class="mt-4"
-        :max="max"
-        @change="chooseDate"
-              color="#2A3B4D"
-      header-color="#1A237E"       year-icon="mdi-calendar-blank"
-      prev-icon="mdi-skip-previous"
-      next-icon="mdi-skip-next"
-      ></v-date-picker>
-        </v-row>
+      <v-row justify="center">
+        <v-date-picker
+          v-model="date"
+          class="mt-4"
+          :max="max"
+          @change="chooseDate"
+          color="#2A3B4D"
+          header-color="#1A237E"
+          year-icon="mdi-calendar-blank"
+          prev-icon="mdi-skip-previous"
+          next-icon="mdi-skip-next"
+        ></v-date-picker>
+      </v-row>
     </div>
   </div>
 </template>
@@ -274,11 +177,21 @@ export default {
     })
   },
   computed: {
+    disconnect () {
+      if (this.$store.getters.getConnected === false) {
+        this.goD()
+        return true
+      }
+      return false
+    },
     numberOfPages () {
       return Math.ceil(this.colis.length / this.itemsPerPage)
     }
   },
   methods: {
+    goD () {
+      this.$router.push('/')
+    },
     nextPage () {
       if (this.page + 1 <= this.numberOfPages) this.page += 1
     },

@@ -300,6 +300,9 @@ export default {
     this.$store.dispatch('setCountry')
   },
   methods: {
+    go () {
+      this.$router.push('/')
+    },
     syncData () {
       this.$store.dispatch('setTo', this.to)
       this.$store.dispatch('setFrom', this.from)
@@ -354,6 +357,7 @@ export default {
     }
   },
   computed: {
+
     countries () {
       return this.$store.getters.getCountry
     }

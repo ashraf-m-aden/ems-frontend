@@ -335,7 +335,7 @@ export default {
     }
   },
   mounted () {
-    express.getexpress(this.$route.query.id).then((ems) => {
+    express.getexpress(this.$route.query.id).then(ems => {
       this.to = ems.data.to
       this.from = ems.data.from
     })
@@ -345,6 +345,9 @@ export default {
     this.$store.dispatch('setprint', false)
   },
   methods: {
+    go () {
+      this.$router.push('/')
+    },
     getPrice () {
       const zone = this.to.zone
       var weight = this.from.weight.toString()
@@ -392,6 +395,7 @@ export default {
     }
   },
   computed: {
+
     countries () {
       return this.$store.getters.getExpressCountry
     },

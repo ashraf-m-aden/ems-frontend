@@ -1,18 +1,18 @@
 <template>
   <div class="lettres">
     <div class="header">
-        <v-alert
-      :value="notif"
-      color="#1A237E"
-      dark
-      dismissible
-      border="top"
-      transition="scale-transition"
-      width="200px"
-    >
-      Colis enregistré</v-alert
-    >
-        <div class="dropdown dropleft">
+      <v-alert
+        :value="notif"
+        color="#1A237E"
+        dark
+        dismissible
+        border="top"
+        transition="scale-transition"
+        width="200px"
+      >
+        Colis enregistré</v-alert
+      >
+      <div class="dropdown dropleft">
         <img
           src="../../assets/mort_vert.png"
           class="menu dropdown-toggle"
@@ -190,7 +190,10 @@
               <select
                 class="form-control"
                 v-model="to.zone"
-                v-if="to.type === 'Petit paquet' || to.type === 'Regime international'"
+                v-if="
+                  to.type === 'Petit paquet' ||
+                    to.type === 'Regime international'
+                "
               >
                 <option value="Zone 1">Zone 1 </option>
                 <option value="Zone 2">Zone 2 </option>
@@ -281,6 +284,9 @@ export default {
     this.$store.dispatch('setprint', false)
   },
   methods: {
+    go () {
+      this.$router.push('/')
+    },
     getPrice () {
       const zone = this.to.zone
       this.message = ''
@@ -373,19 +379,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../../sass/main.scss";
-.header{
+.header {
   position: relative;
   padding-top: 2rem;
-  .code{
+  .code {
     position: absolute;
     top: 0;
     right: 0;
     font-size: 1.5rem;
   }
-  .dropdown{
+  .dropdown {
     position: absolute;
     right: 0;
-        .menu {
+    .menu {
       height: 25px;
     }
   }

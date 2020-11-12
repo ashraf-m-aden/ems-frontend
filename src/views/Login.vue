@@ -31,13 +31,16 @@ export default {
   methods: {
     login () {
       const data = { email: this.email, password: this.mdp }
-      login.login(data).then(async (user) => {
-        await this.$store.dispatch('setUser', user.data)
-        await this.$store.dispatch('setConnected', true)
-        this.$router.push('/')
-      }).catch(() => {
-        this.$store.dispatch('setError')
-      })
+      login
+        .login(data)
+        .then(async user => {
+          await this.$store.dispatch('setUser', user.data)
+          await this.$store.dispatch('setConnected', true)
+          this.$router.push('/')
+        })
+        .catch(() => {
+          this.$store.dispatch('setError')
+        })
     }
   },
   computed: {

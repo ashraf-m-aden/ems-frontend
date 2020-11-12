@@ -14,6 +14,11 @@ export default {
       params: data
     })
   },
+  modifyPassword (password) {
+    return login.patch('/users/pass', {
+      params: password
+    })
+  },
   getUser (id) {
     return login.get('/users/' + id)
   },

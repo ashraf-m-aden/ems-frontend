@@ -35,26 +35,28 @@
         </router-link>
       </div>
       <v-spacer></v-spacer>
-        <div class="d-flex justify-content-between menu">
-          <router-link to="/all-ems" v-show="connected">
-            <v-icon large color="#FAFAFA ">
-              mdi-calendar
-            </v-icon>
-          </router-link>
-          <router-link to="/statistiques" v-show="connected">
-            <v-icon large color="#FAFAFA ">
-              mdi-chart-line
-            </v-icon>
-          </router-link>
-          <router-link to="/login" v-show="!connected">
-            <v-icon large color="#FAFAFA "> mdi-login </v-icon>
-          </router-link>
-          <v-icon large color="#FAFAFA " v-show="connected" @click="logout">
-            mdi-logout
+      <div class="d-flex justify-content-between menu">
+        <router-link to="/all-ems" v-show="connected">
+          <v-icon large color="#FAFAFA ">
+            mdi-calendar
           </v-icon>
-        </div>
-      </v-app-bar
-    >
+        </router-link>
+        <router-link to="/statistiques" v-show="connected">
+          <v-icon large color="#FAFAFA ">
+            mdi-chart-line
+          </v-icon>
+        </router-link>
+        <router-link to="/login" v-show="!connected">
+          <v-icon large color="#FAFAFA "> mdi-login </v-icon>
+        </router-link>
+        <router-link to="/profil" v-show="connected">
+          <v-icon large color="#FAFAFA "> mdi-account </v-icon>
+        </router-link>
+        <v-icon large color="#FAFAFA " v-show="connected" @click="logout">
+          mdi-logout
+        </v-icon>
+      </div>
+    </v-app-bar>
   </div>
 </template>
 <script>
@@ -75,10 +77,18 @@ export default {
         .then(async () => {
           await this.$store.dispatch('setConnected', false)
           await this.$store.dispatch('logoutUser')
+          const currentPath = this.$router.history.current.path
+          if (currentPath !== '/') {
+            this.$router.push('/')
+          }
         })
         .catch(() => {
           this.$store.dispatch('setConnected', false)
           this.$store.dispatch('logoutUser')
+          const currentPath = this.$router.history.current.path
+          if (currentPath !== '/') {
+            this.$router.push('/')
+          }
         })
     }
   }

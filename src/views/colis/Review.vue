@@ -11,13 +11,13 @@
       <div class="left">
         <div class="from">
           <span for="name">NOM:</span>
-          <input :value="from.name" readonly type="text"  /><br />
+          <input :value="from.name" readonly type="text" /><br />
           <span for="tel">TEL:</span>
-          <input :value="from.tel" readonly type="text"  /><br />
+          <input :value="from.tel" readonly type="text" /><br />
           <span for="code">Code Postale:</span>
-          <input readonly :value="from.cp" type="text"  />
+          <input readonly :value="from.cp" type="text" />
           <span for="ville">Ville:</span>
-          <input readonly type="text" :value="from.town"  /><br />
+          <input readonly type="text" :value="from.town" /><br />
           <strong>Djibouti</strong>
           <div class="douane">
             Reference douane de l'expediteur (si elle existe)
@@ -25,27 +25,39 @@
         </div>
         <div class="to">
           <span for="nameTo">NOM:</span>
-          <input readonly type="text"  :value="to.name"/><br />
+          <input readonly type="text" :value="to.name" /><br />
           <span for="address">ADDRESSE:</span>
-          <input readonly type="text"  :value="to.address"/><br />
+          <input readonly type="text" :value="to.address" /><br />
           <span for="tel2">TEL:</span>
           <input readonly type="text" :value="to.tel" /><br />
           <span for="tel2">Code Postale:</span>
-          <input readonly type="text" class="codeville" :value="to.cp"/>
+          <input readonly type="text" class="codeville" :value="to.cp" />
           <span for="tel2">Ville:</span>
-          <input readonly type="text" class="codeville" :value="to.town"/><br />
+          <input
+            readonly
+            type="text"
+            class="codeville"
+            :value="to.town"
+          /><br />
           <span for="pays">Pays:</span>
-          <input readonly type="text"  :value="to.country"/><br />
+          <input readonly type="text" :value="to.country" /><br />
         </div>
         <div class="info">
           <div class="info-details">
             <h5>Bureau d'échange</h5>
             <div id="box" class="box">
-              <textarea name="" id="" cols="30" rows="5" readonly :value="to.object"></textarea>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="5"
+                readonly
+                :value="to.object"
+              ></textarea>
             </div>
             <div class="valeur">
               <label for="">Valeur estimée</label>
-              <input readonly type="text" :value="to.value"/> FDJ
+              <input readonly type="text" :value="to.value" /> FDJ
             </div>
           </div>
           <div class="info-douane">
@@ -69,7 +81,7 @@
               </div>
               <div>
                 Date et signature de l’expéditeur <br />
-                <input readonly type="text" class="triple" :value="to.date"/>
+                <input readonly type="text" class="triple" :value="to.date" />
               </div>
             </li>
           </ul>
@@ -100,11 +112,13 @@
           <li class="price">
             <div>
               <span>Poids brut total du colis</span>
-              <input readonly type="number" class="double" :value="to.weight" /> KG
+              <input readonly type="number" class="double" :value="to.weight" />
+              KG
             </div>
             <div>
               <span>Taxe</span>
-              <input readonly type="text" class="triple" :value="to.price" /> FDJ
+              <input readonly type="text" class="triple" :value="to.price" />
+              FDJ
             </div>
           </li>
           <li>
@@ -183,10 +197,12 @@ export default {
   },
 
   methods: {
-
+    go () {
+      this.$router.push('/')
+    }
   },
   mounted () {
-    ems.getEms(this.$route.query.id).then((ems) => {
+    ems.getEms(this.$route.query.id).then(ems => {
       this.to = ems.data.to
       this.from = ems.data.from
     })
@@ -195,7 +211,6 @@ export default {
   destroyed () {
     this.$store.dispatch('setprint', false)
   }
-
 }
 </script>
 
@@ -247,7 +262,7 @@ export default {
           width: 50%;
         }
 
-        .codeville{
+        .codeville {
           width: 30%;
         }
 
@@ -276,7 +291,7 @@ export default {
           }
         }
 
-        .codeville{
+        .codeville {
           width: 30%;
         }
 

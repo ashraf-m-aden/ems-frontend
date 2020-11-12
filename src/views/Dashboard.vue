@@ -84,11 +84,10 @@ export default {
   computed: {
     user () {
       var connected = this.$store.getters.getConnected
-      if (
-        this.$store.getters.getConnected &&
-        this.$store.getters.getUser.user !== undefined
-      ) {
-        return 'Bonjour ' + this.$store.getters.getUser.user.name
+      if (this.$store.getters.getConnected) {
+        if (this.$store.getters.getUser.user !== undefined) {
+          return 'Bonjour ' + this.$store.getters.getUser.user.name
+        } else return 'Bonjour ' + this.$store.getters.getUser.name
       } else {
         connected = ''
         return 'Bonjour' + connected
@@ -153,7 +152,7 @@ export default {
   justify-content: space-around;
   &-ems {
     width: 30%;
-    border: #2A3B4D solid 2px;
+    border: #2a3b4d solid 2px;
     border-radius: 10px;
     padding: 1rem;
     .title {

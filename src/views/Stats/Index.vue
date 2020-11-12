@@ -89,6 +89,9 @@ export default {
     }
   },
   methods: {
+    go () {
+      this.$router.push('/')
+    },
     getYear () {
       this.title = "L'année " + new Date().getFullYear()
 

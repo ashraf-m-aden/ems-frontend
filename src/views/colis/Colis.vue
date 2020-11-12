@@ -35,6 +35,9 @@ export default {
     this.$store.dispatch('setprint', false)
   },
   methods: {
+    go () {
+      this.$router.push('/')
+    }
   }
 }
 </script>
