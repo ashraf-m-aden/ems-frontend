@@ -4,13 +4,15 @@
       <h2 class="login-title">COLIPLUS</h2>
       <div class="form">
         <label>Email</label>
-        <input type="text" class="form-control" v-model="email" />
+        <input type="text" class="form-control" v-model="email"
+        placeholder="bahnan@laposte.dj"/>
         <label>Mot de passe</label>
         <input
           type="password"
           class="form-control"
           v-model="mdp"
           @keypress.enter="login"
+          placeholder="123@Passer"
         />
         <label class="error" v-if="message">Mot de passe ou email erroné</label>
       </div>
